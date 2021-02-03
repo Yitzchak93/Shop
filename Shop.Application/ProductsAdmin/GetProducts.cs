@@ -5,7 +5,7 @@ using System.Text;
 
 using Shop.Database;
 
-namespace Shop.Application.Products
+namespace Shop.Application.ProductsAdmin
 {
     public class GetProducts
     {
@@ -21,7 +21,7 @@ namespace Shop.Application.Products
                 Id = x.Id,
                 Name = x.Name,
                 Description = x.Description,
-                Value = x.Value
+                Value =  x.Value
             });
         public class ProductViewModel
         {

@@ -1,11 +1,12 @@
 ﻿using Shop.Database;
 using Shop.Domain.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Application.CreateProducts
+namespace Shop.Application.ProductsAdmin
 {
     public class CreateProduct
     {
@@ -20,7 +21,7 @@ namespace Shop.Application.CreateProducts
         {
             _context.Products.Add(new Product
             {
-                Name = vm. Name,
+                Name = vm.Name,
                 Description = vm.Description,
                 Value = vm.Value
             });
@@ -28,7 +29,6 @@ namespace Shop.Application.CreateProducts
             await _context.SaveChangesAsync();
         }
 
-    }
         public class ProductViewModel
         {
             public string Name { get; set; }
@@ -36,4 +36,6 @@ namespace Shop.Application.CreateProducts
             public decimal Value { get; set; }
         }
 
+
+    }
 }
