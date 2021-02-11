@@ -19,18 +19,24 @@ namespace Shop.UI.Controllers
             _ctx = ctx;
         }
 
+        // Get all products
         [HttpGet("products")]
         public IActionResult GetProducts() => Ok(new GetProducts(_ctx).Do());
 
+        // Get a single product
         [HttpGet("products/{id}")]
         public IActionResult GetProduct(int id) => Ok(new GetProduct(_ctx).Do(id));
 
+
+        // Create a new product
         [HttpPost("products")]
         public async Task<IActionResult> CreateProducts([FromBody] CreateProduct.Request request) => Ok((await new CreateProduct(_ctx).Do(request)));
 
+        // Delelte a product
         [HttpDelete("products/{id}")]
         public async Task<IActionResult> DeleteProduct(int id) => Ok((await new DeleteProduct(_ctx).Do(id)));
 
+        // Modify a product
         [HttpPut("products")]
         public async Task<IActionResult> UpdateProduct([FromBody] UpdateProduct.Request request) => Ok((await new UpdateProduct(_ctx).Do(request)));
     }
