@@ -10,7 +10,7 @@ using Shop.Database;
 namespace Shop.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210208164622_Shop Model")]
+    [Migration("20210216150749_Shop Model")]
     partial class ShopModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
