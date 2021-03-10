@@ -2,6 +2,7 @@
 @model Shop.UI.Pages.CartModel
 @{
 }
+
 <div>
     @foreach (var product in Model.Cart)
     {
@@ -12,3 +13,6 @@
         <hr />
     }
 </div>
+
+<vc:cart view="Small"></vc:cart>
+
