@@ -54,8 +54,14 @@ namespace Shop.Database.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderRef = table.Column<string>(nullable: true),
+                    StripeReference = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
                     Address1 = table.Column<string>(nullable: true),
                     Address2 = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
                     PostCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -185,30 +191,6 @@ namespace Shop.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderProducts",
-                columns: table => new
-                {
-                    ProductId = table.Column<int>(nullable: false),
-                    OrderId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderProducts", x => new { x.ProductId, x.OrderId });
-                    table.ForeignKey(
-                        name: "FK_OrderProducts_Order_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Order",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderProducts_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Stock",
                 columns: table => new
                 {
@@ -225,6 +207,31 @@ namespace Shop.Database.Migrations
                         name: "FK_Stock_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderStocks",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false),
+                    StockId = table.Column<int>(nullable: false),
+                    Qty = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderStocks", x => new { x.StockId, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_OrderStocks_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderStocks_Stock_StockId",
+                        column: x => x.StockId,
+                        principalTable: "Stock",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -269,8 +276,8 @@ namespace Shop.Database.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderProducts_OrderId",
-                table: "OrderProducts",
+                name: "IX_OrderStocks_OrderId",
+                table: "OrderStocks",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
@@ -297,10 +304,7 @@ namespace Shop.Database.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "OrderProducts");
-
-            migrationBuilder.DropTable(
-                name: "Stock");
+                name: "OrderStocks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -310,6 +314,9 @@ namespace Shop.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "Stock");
 
             migrationBuilder.DropTable(
                 name: "Products");
