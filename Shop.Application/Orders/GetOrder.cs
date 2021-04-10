@@ -44,7 +44,7 @@ namespace Shop.Application.Orders
 
         public Response Do(string reference) =>
 
-             _ctx.Order
+             _ctx.Orders
                 .Where(x => x.OrderRef == reference)
                 .Include(x => x.OrderStocks)
                 .ThenInclude(x => x.Stock)

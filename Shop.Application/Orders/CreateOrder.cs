@@ -67,7 +67,7 @@ namespace Shop.Application.Orders
                     Qty = x.Qty
                 }).ToList()
             };
-            _ctx.Order.Add(order);
+            _ctx.Orders.Add(order);
             return await _ctx.SaveChangesAsync() > 0;
         }
 
@@ -84,7 +84,7 @@ namespace Shop.Application.Orders
                     result[i] = chars[random.Next(chars.Length)];
                 }
 
-            } while (_ctx.Order.Any(x => x.OrderRef == new string(result)));
+            } while (_ctx.Orders.Any(x => x.OrderRef == new string(result)));
 
             return new string(result);
         }
