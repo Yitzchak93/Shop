@@ -48,7 +48,7 @@ namespace Shop.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -66,7 +66,7 @@ namespace Shop.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,13 +223,34 @@ namespace Shop.Database.Migrations
                 {
                     table.PrimaryKey("PK_OrderStocks", x => new { x.StockId, x.OrderId });
                     table.ForeignKey(
-                        name: "FK_OrderStocks_Order_OrderId",
+                        name: "FK_OrderStocks_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderStocks_Stock_StockId",
+                        column: x => x.StockId,
+                        principalTable: "Stock",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockOnHolds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    StockId = table.Column<int>(nullable: false),
+                    Qty = table.Column<int>(nullable: false),
+                    ExpirationDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockOnHolds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StockOnHolds_Stock_StockId",
                         column: x => x.StockId,
                         principalTable: "Stock",
                         principalColumn: "Id",
@@ -284,6 +305,11 @@ namespace Shop.Database.Migrations
                 name: "IX_Stock_ProductId",
                 table: "Stock",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockOnHolds_StockId",
+                table: "StockOnHolds",
+                column: "StockId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -307,13 +333,16 @@ namespace Shop.Database.Migrations
                 name: "OrderStocks");
 
             migrationBuilder.DropTable(
+                name: "StockOnHolds");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Stock");

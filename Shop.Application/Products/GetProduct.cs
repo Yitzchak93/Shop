@@ -18,7 +18,7 @@ namespace Shop.Application.Products
 
         public async Task<ProductViewModel> Do(string name)
         {
-            var stocksOnHold = _ctx.StockOnHolds.Where(x => x.ExpirationDate < DateTime.Now).ToList();
+            var stocksOnHold = _ctx.StocksOnHold.Where(x => x.ExpirationDate < DateTime.Now).ToList();
 
             if (stocksOnHold.Count > 0)
             {
@@ -30,7 +30,7 @@ namespace Shop.Application.Products
 
                 }
 
-                _ctx.StockOnHolds.RemoveRange(stocksOnHold);
+                _ctx.StocksOnHold.RemoveRange(stocksOnHold);
 
                 await _ctx.SaveChangesAsync();
             }
