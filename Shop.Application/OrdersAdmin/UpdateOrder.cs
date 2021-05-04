@@ -14,10 +14,12 @@ namespace Shop.Application.OrdersAdmin
         {
             _ctx = ctx;
         }
-        public async Task<bool> Do(int id)
+        public async Task<bool> DoAsync(int id)
         {
             var order = _ctx.Orders.FirstOrDefault(x => x.Id == x.Id);
+
             order.Status = order.Status + 1;
+
             return await _ctx.SaveChangesAsync() > 0; 
         }
     }

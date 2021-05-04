@@ -46,32 +46,32 @@ namespace Shop.Application.OrdersAdmin
         }
         public Response Do(int id) =>
             _ctx.Orders
-               .Where(x => x.Id == id)
+                .Where(x => x.Id == id)
                 .Include(x => x.OrderStocks)
-            .ThenInclude(x => x.Stock)
-            .ThenInclude(x => x.Product)
-            .Select(x => new Response
-            {
-                Id = x.Id,
-                OrderRef = x.OrderRef,
-                StripeReference = x.StripeReference,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Email = x.Email,
-                PhoneNumber = x.PhoneNumber,
-                Address1 = x.Address1,
-                Address2 = x.Address2,
-                City = x.City,
-                PostCode = x.PostCode,
-
-                Products = x.OrderStocks.Select(y => new Product
+                .ThenInclude(x => x.Stock)
+                .ThenInclude(x => x.Product)
+                .Select(x => new Response
                 {
-                    Name = y.Stock.Product.Name,
-                    Description = y.Stock.Description,
-                    Qty = y.Qty,
-                    StockDescription = y.Stock.Description,
-                }),
-            })
-            .FirstOrDefault();
+                    Id = x.Id,
+                    OrderRef = x.OrderRef,
+                    StripeReference = x.StripeReference,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Email = x.Email,
+                    PhoneNumber = x.PhoneNumber,
+                    Address1 = x.Address1,
+                    Address2 = x.Address2,
+                    City = x.City,
+                    PostCode = x.PostCode,
+
+                    Products = x.OrderStocks.Select(y => new Product
+                    {
+                        Name = y.Stock.Product.Name,
+                        Description = y.Stock.Description,
+                        Qty = y.Qty,
+                        StockDescription = y.Stock.Description,
+                    }),
+                })
+                .FirstOrDefault();
     }
 }

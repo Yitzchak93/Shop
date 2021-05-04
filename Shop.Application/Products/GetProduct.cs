@@ -42,7 +42,7 @@ namespace Shop.Application.Products
                 {
                     Name = x.Name,
                     Description = x.Description,
-                    Value = $"$ {x.Value.ToString("N2")}",
+                    Value = $"${x.Value.ToString("N2")}",
                     Stock = x.Stock.Select(y => new StockViewModel
                     {
                         Id = y.Id,
